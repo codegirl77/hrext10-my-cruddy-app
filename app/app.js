@@ -5,9 +5,33 @@
 - [ ] How to modify data? (update action, delete action)
 
 */
+// pet functions
+
+const Dog = function(name, breed){
+  this.name = name;
+  this.breed = breed;
+  this.age = 1;
+  this.hunger = 10;
+  this.happiness = 100; 
+  this.energy = 100;
+  this.traits = []; 
+};
+
+
+
+
+
+
+
 
 //localStorage functions
 var createItem = function(key, value) {
+   key = new Dog(key)  
+   key['traits'] = [value]
+   value = JSON.stringify(key)
+   key = key.name
+   console.log(key)
+
   return window.localStorage.setItem(key, value);
 }
 
@@ -24,11 +48,12 @@ var clearDatabase = function() {
 }
 
 var showDatabaseContents = function() {
-  $('tbody').html('');
+  $('.dog-holder').html('');
 
   for (var i = 0; i < window.localStorage.length; i++) {
     var key = window.localStorage.key(i);
-    $('tbody').append(`<tr><td>${key}</td><td>${window.localStorage.getItem(key)}</td></tr>`)
+    obj = JSON.parse(window.localStorage.getItem(key))
+    $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-beagle-1345191.jpg"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div></div>`)
   }
 }
 
@@ -106,5 +131,9 @@ $(document).ready(function() {
       clearDatabase();
       showDatabaseContents();
     }
+  })
+
+  $('.dog-description').on('click', function(){
+    console.log('hello')
   })
 })
