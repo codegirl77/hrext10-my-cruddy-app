@@ -10,7 +10,16 @@ inputs (border swag)
 
 https://getbootstrap.com/docs/4.3/getting-started/introduction/
 */
+.dog-holder{
+  display:flex;
+  flex-direction: row; ;
+}
 
+.dog-description{
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+}
 th {
   text-decoration: underline;
 }
