@@ -82,7 +82,7 @@ var createItem = function(key, value) {
 var createPup = function(key, dogOneObj, dogTwoObj) {
   var name = key
   key = new Puppy(name,dogOneObj,dogTwoObj)
-  console.log(key)
+  key['pup'] = 'pup'
   var value = JSON.stringify(key)
   key = key.name
   return window.localStorage.setItem(key, value)
@@ -106,7 +106,11 @@ var showDatabaseContents = function() {
   for (var i = 0; i < window.localStorage.length; i++) {
     var key = window.localStorage.key(i);
     obj = JSON.parse(window.localStorage.getItem(key))
-    $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div></div>`)
+    if(!obj.hasOwnProperty('pup')){
+      $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div></div>`)
+    } else {
+      $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-animal-photography-1663421.jpg" id=${key} class="image"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div></div>`)
+    }
   }
 }
 
