@@ -61,7 +61,7 @@ Dog.prototype.addTrait = function(traitType){
 
 var Puppy = function(name, parentOne, parentTwo){ 
       Dog.call(this, name); 
-      this.traits = parentOne.traits[0]
+      this.traits = parentOne.traits
   }
 
 Puppy.prototype = Object.create(Dog.prototype); 
@@ -107,9 +107,9 @@ var showDatabaseContents = function() {
     var key = window.localStorage.key(i);
     obj = JSON.parse(window.localStorage.getItem(key))
     if(!obj.hasOwnProperty('pup')){
-      $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div></div>`)
+      $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div><div class="button-holder"><button class="feed">Feed</button><button class="play">Play</button><button class="nap">Nap</button></div></div>`)
     } else {
-      $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-animal-photography-1663421.jpg" id=${key} class="image"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div></div>`)
+      $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-animal-photography-1663421.jpg" id=${key} class="image"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div><div class="button-holder"><button class="feed">Feed</button><button class="play">Play</button><button class="nap">Nap</button></div></div>`)
     }
   }
 }
@@ -198,27 +198,30 @@ $(document).ready(function() {
   var dogOneObj;
   var dogTwoKey;
   var dogTwoObj;
-  var reference; 
 
   $('.dog-holder').on('click', '.image', function(){
     if(dogOneKey === undefined && dogTwoKey === undefined){
-     dogOneKey = $(this).attr("id");
-     dogOneObj = JSON.parse(window.localStorage.getItem(dogOneKey))
+      if(confirm(`Are you sure you want ${$(this).attr("id")} as a parent of your puppy?`)) {
+       dogOneKey = $(this).attr("id");
+       dogOneObj = JSON.parse(window.localStorage.getItem(dogOneKey))
+      }
     } else if (dogOneKey !== undefined && dogTwoKey === undefined){
-     dogTwoKey = $(this).attr("id");
-     dogTwoObj = JSON.parse(window.localStorage.getItem(dogTwoKey))
-     console.log(dogOneObj)
-     console.log(dogTwoObj);
+      if(confirm(`Are you sure you want ${$(this).attr("id")} as a parent of your puppy?`)) {
+       dogTwoKey = $(this).attr("id");
+       dogTwoObj = JSON.parse(window.localStorage.getItem(dogTwoKey))
+       console.log(dogOneObj)
+       console.log(dogTwoObj);
     } 
+  }
   })
 
   $('.create-puppy').click(function() {
-    console.log('hello')
-          
-    var pup =  createPup(getPupInput(), dogOneObj, dogTwoObj);
-    console.log(pup)
+    createPup(getPupInput(), dogOneObj, dogTwoObj);
     showDatabaseContents();
     resetInputs();
-
+    dogOneKey = undefined;
+    dogOneObj = undefined;
+    dogTwoKey = undefined;
+    dogTwoObj = undefined;
     });
 })
