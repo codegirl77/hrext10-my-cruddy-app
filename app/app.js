@@ -78,6 +78,7 @@ var addTrait = function(obj, traitType){
 var Puppy = function(name, parentOne, parentTwo){ 
       Dog.call(this, name); 
       this.traits = parentOne.traits
+      this.breed= parentTwo.breed
   }
 
 Puppy.prototype = Object.create(Dog.prototype); 
@@ -86,9 +87,11 @@ Puppy.prototype.constructor = Puppy;
 
 
 //localStorage functions
-var createItem = function(key, value) {
+var createItem = function(key, value, dogImage, breed) {
    key = new Dog(key)  
    key['traits'] = [value]
+   key['dogImage'] = dogImage
+   key['breed'] = breed
    value = JSON.stringify(key)
    key = key.name
 
@@ -98,11 +101,11 @@ var createItem = function(key, value) {
 var createPup = function(key, dogOneObj, dogTwoObj) {
   var name = key
   key = new Puppy(name,dogOneObj,dogTwoObj)
-  key['pup'] = 'pup'
   key['age'] = 1
+  key['dogImage'] = dogTwoObj.dogImage
+  key['pup'] = 'pup'
   var value = JSON.stringify(key)
   key = key.name
-  Puppy.prototype = Object.create(Dog.prototype); 
   return window.localStorage.setItem(key, value)
 }
 
@@ -141,14 +144,22 @@ var showDatabaseContents = function() {
     var $nap = $(`<button class="nap">Nap</button></div>`)
     $nap.attr('data-dog', key)
     if(!obj.hasOwnProperty('pup')){
-      var $image = $(`<div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div>`)
+      var $image = $(`<div><image src="${obj['dogImage']}" id=${key} class="image"/></div>`)
    
     } else if (obj.hasOwnProperty('pup') && obj['age'] >= 5) {
       delete obj['pup']
-       var $image = $(`<div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div>`)
+       var $image = $(`<div><image src="${obj['dogImage']}" id=${key} class="image"/></div>`)
     } else {
-      var $image = $(`<div><image src="adorable-animal-animal-photography-1663421.jpg" id=${key} class="image"/></div>`)
-     
+        if(obj['breed'] ==="husky"){
+            var src = 'cody-board-tnNVJd_nrw8-unsplash.jpg'
+        } else if (obj['breed'] === "lab"){
+             var src  = 'berkay-gumustekin-ngqyo2AYYnE-unsplash.jpg'
+        } else if (obj['breed'] === "aussie"){
+             var src  = "adorable-animal-bernedoodle-1458925.jpg"
+        } else if (obj['breed'] === "corgi"){
+            var src = 'ipet-photo-LHeDYF6az38-unsplash.jpg'
+        }
+      var $image = $(`<div><image src=${src} id=${key} class="image"/></div>`)
     }
     $dogInfo.append($name)
     $dogInfo.append($personality)
@@ -189,6 +200,12 @@ var resetInputs = function() {
 
 $(document).ready(function() {
   showDatabaseContents();
+  var dogImage;
+  var breed;
+  $('.dog-image').on('click', function(){
+    dogImage = $(this).attr("src")
+    breed = $(this).attr("id")
+  })
 
   $('.create').click(function() {
     if (getKeyInput() !== '' && getValueInput() !== '') {
@@ -198,9 +215,11 @@ $(document).ready(function() {
           showDatabaseContents();
         }
       } else {
-        createItem(getKeyInput(), getValueInput());
+        createItem(getKeyInput(), getValueInput(), dogImage, breed);
         showDatabaseContents();
         resetInputs();
+        dogImage = undefined;
+        breed = undefined;
       }
     } else  {
       alert('key and value must not be blank');
@@ -261,6 +280,7 @@ $(document).ready(function() {
       if(confirm(`Are you sure you want ${$(this).attr("id")} as a parent of your puppy?`)) {
        dogTwoKey = $(this).attr("id");
        dogTwoObj = JSON.parse(window.localStorage.getItem(dogTwoKey))
+       console.log(dogOneObj)
     } 
   }
   })
