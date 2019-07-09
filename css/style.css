@@ -48,7 +48,7 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 .dog-holder{
   display:flex;
   flex-flow: row wrap;
-  align-items: center;
+  justify-content: center;
   width: 700px;
   height: 700px;
   margin: auto;
@@ -56,7 +56,7 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 
 .dog-description{
 	display: flex;
-	align-items: center;
+	justify-content: center;
 	flex-direction: column;
 	padding: 10px;
 }
