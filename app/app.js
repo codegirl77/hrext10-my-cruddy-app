@@ -26,8 +26,8 @@ var feed = function(obj){
   } else {
     obj['hunger'] = 0;
   }
-  if (obj['happiness'] - 10 > 0) {
-    obj['happiness'] -= 10;
+  if (obj['happiness'] - 5 > 0) {
+    obj['happiness'] -= 5;
   } else {
     obj['happiness'] = 0;
   }
@@ -36,8 +36,8 @@ var feed = function(obj){
 
 var play = function(obj){
   // increase happiness by number of units of time 
-  if (obj['happiness'] + 20 < 100){
-    obj['happiness'] += 20;
+  if (obj['happiness'] + 40 < 100){
+    obj['happiness'] += 40;
   } else {
     obj['happiness'] = 100
   }
@@ -63,8 +63,8 @@ var nap = function(obj){
   } else {
     obj['energy'] = 100;
   }
-  if (obj['happiness'] - 10 > 0) {
-    obj['happiness'] -= 10;
+  if (obj['happiness'] - 5 > 0) {
+    obj['happiness'] -= 5;
   } else {
     obj['happiness'] = 0;
   }
