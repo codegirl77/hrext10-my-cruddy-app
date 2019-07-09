@@ -10,13 +10,35 @@ inputs (border swag)
 
 https://getbootstrap.com/docs/4.3/getting-started/introduction/
 */
+.container{
+	display: flex;
+	justify-content: center;
+}
+.row{
+	display: flex;
+	justify-content: center;
+}
+.choose-image-holder{
+	display: flex;
+	justify-content: center;
+}
+.puppy-creator{
+	display: flex;
+	justify-content: center;
+}
+
 .dog-holder{
   display:flex;
-  flex-direction: row; ;
+  flex-flow: row wrap;
+  align-items: center;
+  width: 800px;
+  height: 700px;
+  margin: auto;
 }
 
 .dog-description{
 	display: flex;
+	align-items: center;
 	flex-direction: column;
 	padding: 10px;
 }
