@@ -16,46 +16,62 @@ const Dog = function(name, breed){
   this.traits = []; 
 };
 
-Dog.prototype.getOlder = function(){
-  this.age++;
+var getOlder = function(obj){
+  obj['age']++;
 };
 
-Dog.prototype.feed = function(){
-  if (this.hunger - 5 > 0) {
-    this.hunger -= 5;
+var feed = function(obj){
+  if (obj['hunger'] - 5 > 0) {
+    obj['hunger'] -= 5;
   } else {
-    this.hunger = 0;
+    obj['hunger'] = 0;
   }
+  if (obj['happiness'] - 10 > 0) {
+    obj['happiness'] -= 10;
+  } else {
+    obj['happiness'] = 0;
+  }
+
 };
 
-Dog.prototype.play = function(){
+var play = function(obj){
   // increase happiness by number of units of time 
-  if (this.happiness + 20 < 100){
-    this.happiness += 20;
+  if (obj['happiness'] + 20 < 100){
+    obj['happiness'] += 20;
   } else {
-    this.happiness = 100
-    this.getOlder()
+    obj['happiness'] = 100
   }
   //until zero energy
-  if (this.energy - 30 > 0){
-    this.energy -= 30;
+  if (obj['energy'] - 30 > 0){
+    obj['energy'] -= 30;
   } else {
-    this.energy = 0;
-  }
-  this.getOlder();
-};
-
-Dog.prototype.nap = function(){
-  if (this.energy + 40 < 100){
-    this.energy += 40;
-  } else {
-    this.energy = 100;
-    this.getOlder();
+    obj['energy'] = 0;
   }
 
+  if (obj['hunger'] + 2 <= 10){
+    obj['hunger'] += 2;
+  } else {
+    obj['hunger'] = 10;
+  }
+  
 };
 
-Dog.prototype.addTrait = function(traitType){
+var nap = function(obj){
+  if (obj['energy'] + 40 < 100){
+    obj['energy'] += 40
+
+  } else {
+    obj['energy'] = 100;
+  }
+  if (obj['happiness'] - 10 > 0) {
+    obj['happiness'] -= 10;
+  } else {
+    obj['happiness'] = 0;
+  }
+
+};
+
+var addTrait = function(obj, traitType){
   this.traits.push(traitType);
 };
 
@@ -127,6 +143,9 @@ var showDatabaseContents = function() {
     if(!obj.hasOwnProperty('pup')){
       var $image = $(`<div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div>`)
    
+    } else if (obj.hasOwnProperty('pup') && obj['age'] >= 5) {
+      delete obj['pup']
+       var $image = $(`<div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div>`)
     } else {
       var $image = $(`<div><image src="adorable-animal-animal-photography-1663421.jpg" id=${key} class="image"/></div>`)
      
@@ -242,8 +261,6 @@ $(document).ready(function() {
       if(confirm(`Are you sure you want ${$(this).attr("id")} as a parent of your puppy?`)) {
        dogTwoKey = $(this).attr("id");
        dogTwoObj = JSON.parse(window.localStorage.getItem(dogTwoKey))
-       console.log(dogOneObj)
-       console.log(dogTwoObj);
     } 
   }
   })
@@ -256,5 +273,36 @@ $(document).ready(function() {
     dogOneObj = undefined;
     dogTwoKey = undefined;
     dogTwoObj = undefined;
-    });
+  });
+
+  $(document).on('click','.feed', function(){
+    var dogKey = $(this).attr("data-dog")
+    var dogObj = JSON.parse(window.localStorage.getItem(dogKey))
+    feed(dogObj)
+    getOlder(dogObj)
+    var dogValue = JSON.stringify(dogObj)
+    updateItem(dogKey, dogValue);
+    showDatabaseContents();
+  })
+
+  $(document).on('click','.play', function(){
+    var dogKey = $(this).attr("data-dog")
+    var dogObj = JSON.parse(window.localStorage.getItem(dogKey))
+    play(dogObj)
+    getOlder(dogObj)
+    var dogValue = JSON.stringify(dogObj)
+    updateItem(dogKey, dogValue);
+    showDatabaseContents();
+  })
+
+  $(document).on('click','.nap', function(){
+    var dogKey = $(this).attr("data-dog")
+    var dogObj = JSON.parse(window.localStorage.getItem(dogKey))
+    nap(dogObj)
+    getOlder(dogObj)
+    var dogValue = JSON.stringify(dogObj)
+    updateItem(dogKey, dogValue);
+    showDatabaseContents();
+  })
+
 })
