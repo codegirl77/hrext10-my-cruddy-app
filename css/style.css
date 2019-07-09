@@ -10,6 +10,20 @@ inputs (border swag)
 
 https://getbootstrap.com/docs/4.3/getting-started/introduction/
 */
+.header{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.text{
+	display: flex;
+	justify-content: center
+
+}
+.header-image{
+	display: flex;
+	justify-content: center
+}
 .container{
 	display: flex;
 	justify-content: center;
@@ -22,6 +36,10 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 	display: flex;
 	justify-content: center;
 }
+.dog-image{
+	display: flex;
+	padding: 10px;
+}
 .puppy-creator{
 	display: flex;
 	justify-content: center;
@@ -31,7 +49,7 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
   display:flex;
   flex-flow: row wrap;
   align-items: center;
-  width: 800px;
+  width: 700px;
   height: 700px;
   margin: auto;
 }
