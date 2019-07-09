@@ -9,7 +9,7 @@
 
 const Dog = function(name, breed){
   this.name = name;
-  this.age = 1;
+  this.age = 5;
   this.hunger = 10;
   this.happiness = 100; 
   this.energy = 100;
@@ -20,34 +20,34 @@ Dog.prototype.getOlder = function(){
   this.age++;
 };
 
-Dog.prototype.feed = function(food){
-  if (this.hunger - food > 0) {
-    this.hunger -= food;
+Dog.prototype.feed = function(){
+  if (this.hunger - 5 > 0) {
+    this.hunger -= 5;
   } else {
     this.hunger = 0;
   }
 };
 
-Dog.prototype.play = function(time){
+Dog.prototype.play = function(){
   // increase happiness by number of units of time 
-  if (this.happiness + time < 100){
-    this.happiness += time;
+  if (this.happiness + 20 < 100){
+    this.happiness += 20;
   } else {
     this.happiness = 100
     this.getOlder()
   }
   //until zero energy
-  if (this.energy - time > 0){
-    this.energy -= time;
+  if (this.energy - 30 > 0){
+    this.energy -= 30;
   } else {
     this.energy = 0;
   }
   this.getOlder();
 };
 
-Dog.prototype.nap = function(time){
-  if (this.energy + time < 100){
-    this.energy += time;
+Dog.prototype.nap = function(){
+  if (this.energy + 40 < 100){
+    this.energy += 40;
   } else {
     this.energy = 100;
     this.getOlder();
@@ -83,8 +83,10 @@ var createPup = function(key, dogOneObj, dogTwoObj) {
   var name = key
   key = new Puppy(name,dogOneObj,dogTwoObj)
   key['pup'] = 'pup'
+  key['age'] = 1
   var value = JSON.stringify(key)
   key = key.name
+  Puppy.prototype = Object.create(Dog.prototype); 
   return window.localStorage.setItem(key, value)
 }
 
@@ -106,11 +108,42 @@ var showDatabaseContents = function() {
   for (var i = 0; i < window.localStorage.length; i++) {
     var key = window.localStorage.key(i);
     obj = JSON.parse(window.localStorage.getItem(key))
+    var $dogHolder = $('.dog-holder')
+    var $dogDescription = $( `<div class="dog-description"></div>`)
+    var $dogInfo = $(`<div class="dog-info"></div>`)
+    var $name = $(`<div> Name: ${key}</div>`)
+    var $personality = $(`<div>Personality: ${obj['traits']}</div>`)
+    var $age = $(`<div>Age: ${obj['age']}</div>`)
+    var $hunger = $(`<div>Hunger: ${obj['hunger']}</div>`)
+    var $happiness = $(`<div>Happiness: ${obj['happiness']}</div>`)
+    var $energy = $(`<div> Energy: ${obj['energy']}</div>`)
+    var $buttonHolder = $(`<div class="button-holder"></div>`)
+    var $feed = $(`<button class="feed">Feed</button>`)
+    $feed.attr('data-dog', key)
+    var $play = $(`<button class="play">Play</button>`)
+    $play.attr('data-dog', key)
+    var $nap = $(`<button class="nap">Nap</button></div>`)
+    $nap.attr('data-dog', key)
     if(!obj.hasOwnProperty('pup')){
-      $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div><div class="button-holder"><button class="feed">Feed</button><button class="play">Play</button><button class="nap">Nap</button></div></div>`)
+      var $image = $(`<div><image src="adorable-animal-beagle-1345191.jpg" id=${key} class="image"/></div>`)
+   
     } else {
-      $('.dog-holder').append(`<div class="dog-description"><div><image src="adorable-animal-animal-photography-1663421.jpg" id=${key} class="image"/></div><div> Name: ${key}</div><div>Personality: ${obj['traits']}</div><div class="button-holder"><button class="feed">Feed</button><button class="play">Play</button><button class="nap">Nap</button></div></div>`)
+      var $image = $(`<div><image src="adorable-animal-animal-photography-1663421.jpg" id=${key} class="image"/></div>`)
+     
     }
+    $dogInfo.append($name)
+    $dogInfo.append($personality)
+    $dogInfo.append($age)
+    $dogInfo.append($hunger)
+    $dogInfo.append($happiness)
+    $dogInfo.append($energy)
+    $buttonHolder.append($feed)
+    $buttonHolder.append($play)
+    $buttonHolder.append($nap)
+    $dogDescription.append($image)
+    $dogDescription.append($dogInfo)
+    $dogDescription.append($buttonHolder)
+    $dogHolder.append($dogDescription)
   }
 }
 
