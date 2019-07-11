@@ -200,6 +200,9 @@ var resetInputs = function() {
   $('.key').val('');
   $('.value').val('');
 }
+var resetPupInputs = function() {
+  $('.pup').val('');
+}
 
 $(document).ready(function() {
   showDatabaseContents();
@@ -296,7 +299,7 @@ $(document).ready(function() {
     if(getPupInput() !==''){
       createPup(getPupInput(), dogOneObj, dogTwoObj);
       showDatabaseContents();
-      resetInputs();
+      resetPupInputs();
       dogOneKey = undefined;
       dogOneObj = undefined;
       dogTwoKey = undefined;
