@@ -39,6 +39,9 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 .blue{
 	background-color:#87CEFA;
 }
+.lite-blue{
+	background-color:#E0FFFF;
+}
 .creating-a-dog-description{
 	display: flex;
 	justify-content: center;
@@ -65,10 +68,12 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 .choose-image-holder{
 	display: flex;
 	justify-content: center;
-	justify-content: space-around;
 }
 .dog-image{
 	display: flex;
+}
+.image-setting{
+  margin:10px;
 }
 .puppy-creator{
 	display: flex;
@@ -80,7 +85,7 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
   flex-flow: row wrap;
   justify-content: center;
   justify-content: space-around;
-  width: 700px;
+  width: 1000px;
   height: 700px;
   margin: auto;
 }
@@ -88,11 +93,15 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 .dog-description{
 	display: flex;
 	justify-content: center;
-
 	flex-direction: column;
 	background-color: #E0FFFF;
 	height: 400px;
+	margin:10px;
 	padding: 10px;
+}
+.your-dog-description{
+	width: 600px;
+	padding:2px;
 }
 .button{
 	margin: 10px;
