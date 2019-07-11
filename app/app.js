@@ -319,13 +319,11 @@ $(document).ready(function() {
   $(document).on('click','.play', function(){
     var dogKey = $(this).attr("data-dog")
     var dogObj = JSON.parse(window.localStorage.getItem(dogKey))
-    var playImg = "chris-jarvis-NOLrgL3hUJg-unsplash.jpg"
-    $(this).attr("src", playImg)
-    setTimeout(play(dogObj), 10000)
-    setTimeout(getOlder(dogObj), 10000)
+    play(dogObj)
+    getOlder(dogObj)
     var dogValue = JSON.stringify(dogObj)
-    setTimeout(updateItem(dogKey, dogValue), 10000);
-    setTimeout(showDatabaseContents(), 10000);
+    updateItem(dogKey, dogValue)
+    showDatabaseContents()
   })
 
   $(document).on('click','.nap', function(){
