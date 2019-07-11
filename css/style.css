@@ -10,10 +10,14 @@ inputs (border swag)
 
 https://getbootstrap.com/docs/4.3/getting-started/introduction/
 */
+.over-all-color{
+	background-color:#FAEBD7
+}
 .header{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	background-color:#FAEBD7;
 }
 .text{
 	display: flex;
@@ -23,6 +27,32 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 .header-image{
 	display: flex;
 	justify-content: center
+}
+.spacer{
+	display: flex;
+	height: 20px;
+}
+.spacer-two{
+	display: flex;
+	height: 50px;
+}
+.blue{
+	background-color:#87CEFA;
+}
+.creating-a-dog-description{
+	display: flex;
+	justify-content: center;
+}
+
+.directions-for-dog{
+	width: 600px;
+	padding:2px;
+}
+.center{
+	display: flex;
+	justify-content: center;
+	padding:20px;
+
 }
 .container{
 	display: flex;
@@ -35,10 +65,10 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 .choose-image-holder{
 	display: flex;
 	justify-content: center;
+	justify-content: space-around;
 }
 .dog-image{
 	display: flex;
-	padding: 10px;
 }
 .puppy-creator{
 	display: flex;
@@ -49,6 +79,7 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
   display:flex;
   flex-flow: row wrap;
   justify-content: center;
+  justify-content: space-around;
   width: 700px;
   height: 700px;
   margin: auto;
@@ -57,8 +88,19 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 .dog-description{
 	display: flex;
 	justify-content: center;
+
 	flex-direction: column;
+	background-color: #E0FFFF;
+	height: 400px;
 	padding: 10px;
+}
+.button{
+	margin: 10px;
+}
+.input-setting{
+	display:flex;
+	flex-direction: row;
+	padding:10px;
 }
 th {
   text-decoration: underline;
