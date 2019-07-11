@@ -149,6 +149,9 @@ var showDatabaseContents = function() {
     } else if (obj.hasOwnProperty('pup') && obj['age'] >= 5) {
       delete obj['pup']
        var $image = $(`<div><image src="${obj['dogImage']}" id=${key} class="image"/></div>`)
+       var value = JSON.stringify(obj)
+       window.localStorage.setItem(key, value)
+       alert(`CONGRATS! ${key} grew up to be an adult!`);
     } else {
         if(obj['breed'] ==="husky"){
             var src = 'cody-board-tnNVJd_nrw8-unsplash.jpg'
@@ -203,12 +206,16 @@ $(document).ready(function() {
   var dogImage;
   var breed;
   $('.dog-image').on('click', function(){
+    if(dogImage === undefined && breed === undefined){
+    if(confirm(`Are you sure you want ${$(this).attr("id")} as the breed of your dog?`)){
     dogImage = $(this).attr("src")
     breed = $(this).attr("id")
+  }
+  }
   })
 
   $('.create').click(function() {
-    if (getKeyInput() !== '' && getValueInput() !== '') {
+    if (getKeyInput() !== '' && getValueInput() !== ''&& dogImage !== undefined && breed !== undefined) {
       if (keyExists(getKeyInput())) {
         if(confirm('key already exists in database, do you want to update instead?')) {
           updateItem(getKeyInput(), getValueInput());
@@ -222,7 +229,7 @@ $(document).ready(function() {
         breed = undefined;
       }
     } else  {
-      alert('key and value must not be blank');
+      alert('Key and value must not be blank. You must also choose a dog breed from the images above!');
     }
   });
 
@@ -286,13 +293,17 @@ $(document).ready(function() {
   })
 
   $('.create-puppy').click(function() {
-    createPup(getPupInput(), dogOneObj, dogTwoObj);
-    showDatabaseContents();
-    resetInputs();
-    dogOneKey = undefined;
-    dogOneObj = undefined;
-    dogTwoKey = undefined;
-    dogTwoObj = undefined;
+    if(getPupInput() !==''){
+      createPup(getPupInput(), dogOneObj, dogTwoObj);
+      showDatabaseContents();
+      resetInputs();
+      dogOneKey = undefined;
+      dogOneObj = undefined;
+      dogTwoKey = undefined;
+      dogTwoObj = undefined;
+    } else {
+      alert('Puppy\'s name should not be blank!');
+    }
   });
 
   $(document).on('click','.feed', function(){
@@ -308,11 +319,13 @@ $(document).ready(function() {
   $(document).on('click','.play', function(){
     var dogKey = $(this).attr("data-dog")
     var dogObj = JSON.parse(window.localStorage.getItem(dogKey))
-    play(dogObj)
-    getOlder(dogObj)
+    var playImg = "chris-jarvis-NOLrgL3hUJg-unsplash.jpg"
+    $(this).attr("src", playImg)
+    setTimeout(play(dogObj), 10000)
+    setTimeout(getOlder(dogObj), 10000)
     var dogValue = JSON.stringify(dogObj)
-    updateItem(dogKey, dogValue);
-    showDatabaseContents();
+    setTimeout(updateItem(dogKey, dogValue), 10000);
+    setTimeout(showDatabaseContents(), 10000);
   })
 
   $(document).on('click','.nap', function(){
